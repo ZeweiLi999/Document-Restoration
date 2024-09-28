@@ -1,6 +1,6 @@
 # Document-Restoration
 
-## Choose Your Readme Version
+## ![Static Badge](https://img.shields.io/badge/Language-语言-8A2BE2) Choose Your Readme Version
 
 - [简体中文](readme/readme_CN.md)
 - [English](readme/readme_EN.md)
