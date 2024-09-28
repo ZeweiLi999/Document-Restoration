@@ -1,6 +1,6 @@
 # 文档复原软件
 
-## ![Static Badge](https://img.shields.io/badge/Language-语言-8A2BE2) 选择你的语言
+## ![Static Badge](https://img.shields.io/badge/Language-语言-8A2BE2) 选择你的语言：
 
 - [简体中文](readme/readme_CN.md)
 - [English](readme/readme_EN.md)
