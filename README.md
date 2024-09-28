@@ -1,18 +1,20 @@
-# Document-Restoration
+# 文档复原软件
 
-## ![Static Badge](https://img.shields.io/badge/Language-语言-8A2BE2) Choose Your Readme Version
+## ![Static Badge](https://img.shields.io/badge/Language-语言-8A2BE2) 选择你的语言
 
 - [简体中文](readme/readme_CN.md)
 - [English](readme/readme_EN.md)
 
-## Document Restoration Software(**PyQT6 + PyTorch**)
-- [x] deshadow
-- [ ] deblur
-- [ ] dejpeg
-- [ ] dewarp
-- [ ] appearance
-- [ ] binarization
+## 功能：
+**实现：PyQT6 + PyTorch**
 
-### Deshadowing
+- [x] 去阴影
+- [ ] 去模糊
+- [ ] 压缩复原
+- [ ] 外观增强
+- [ ] 二值化提取
+- [ ] 折叠复原
+
+### 去阴影功能：
 <img src="https://github.com/user-attachments/assets/4950bd15-5fac-48b2-a70b-1dbf2425ee28" alt="89de2cc669a072c36de638d22f03576" width=500 height=400/>
 
