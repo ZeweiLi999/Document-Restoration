@@ -1,5 +1,5 @@
 # Document-Restoration
-Document Restoration Software(**PyQT6 + Pytorch**)
+Document Restoration Software(**PyQT6 + PyTorch**)
 - [x] deshadow
 - [ ] deblur
 - [ ] dejpeg
