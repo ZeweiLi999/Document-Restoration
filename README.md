@@ -5,7 +5,7 @@
 - [简体中文](readme/readme_CN.md)
 - [English](readme/readme_EN.md)
 
-## 功能：
+## ![Static Badge](https://img.shields.io/badge/Function-功能-blue) 功能：
 **实现：PyQT6 + PyTorch**
 
 - [x] 去阴影
