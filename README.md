@@ -8,12 +8,17 @@
 ## ![Static Badge](https://img.shields.io/badge/Function-功能-blue) 功能：
 **实现：PyQT6 + PyTorch**
 
+**核心功能：**
 - [x] 去阴影
 - [x] 文字提取
 - [x] 去模糊
 - [x] 外观增强
 - [ ] 压缩复原
 - [ ] 折叠复原
+
+**前端优化：**
+- [ ] 进度显示
+- [ ] 多重优化
 
 ### 去阴影功能：
 <img src="https://github.com/user-attachments/assets/7ddefb98-afd3-42e2-a59f-ca2f84e6ca72" alt="89de2cc669a072c36de638d22f03576" width=600 height=450/>
