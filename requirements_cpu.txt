@@ -1,0 +1,9 @@
+--extra-index-url https://download.pytorch.org/whl/cu113
+torch==1.12.1
+torchvision==0.13.1
+numpy==1.21.6
+opencv-python-headless>=4.2.0
+scikit-image>=0.19.3
+PyQt6==6.4.2
+pyqt6-tools==6.4.2.3.3
+einops
