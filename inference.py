@@ -36,6 +36,38 @@ def convert_state_dict(state_dict):
         name = k[7:]  # remove `module.`
         new_state_dict[name] = v
     return new_state_dict
+#deblur去模糊
+def deblur_prompt(img):
+    x = cv2.Sobel(img,cv2.CV_16S,1,0)
+    y = cv2.Sobel(img,cv2.CV_16S,0,1)
+    absX = cv2.convertScaleAbs(x)   # 转回uint8
+    absY = cv2.convertScaleAbs(y)
+    high_frequency = cv2.addWeighted(absX,0.5,absY,0.5,0)
+    high_frequency = cv2.cvtColor(high_frequency,cv2.COLOR_BGR2GRAY)
+    high_frequency = cv2.cvtColor(high_frequency,cv2.COLOR_GRAY2BGR)
+    return high_frequency
+
+
+def deblurring(model, im_path):
+    # setup image
+    im_org = cv2.imread(im_path)
+    in_im, padding_h, padding_w = stride_integral(im_org, 8)
+    prompt = deblur_prompt(in_im)
+    in_im = np.concatenate((in_im, prompt), -1)
+    in_im = in_im / 255.0
+    in_im = torch.from_numpy(in_im.transpose(2, 0, 1)).unsqueeze(0)
+    in_im = in_im.float().to(DEVICE)
+    # inference
+    model.to(DEVICE)
+    model = model.float()
+    with torch.no_grad():
+        pred = model(in_im)
+        pred = torch.clamp(pred, 0, 1)
+        pred = pred[0].permute(1, 2, 0).cpu().numpy()
+        pred = (pred * 255).astype(np.uint8)
+        out_im = pred[padding_h:, padding_w:]
+        out_im = cv2.cvtColor(out_im, cv2.COLOR_BGR2RGB)
+    return prompt[:, :, 0], prompt[:, :, 1], prompt[:, :, 2], out_im
 
 #binarization
 def binarization_promptv2(img):
@@ -76,7 +108,66 @@ def binarization(model, im_path):
 
     return prompt[:, :, 0], prompt[:, :, 1], prompt[:, :, 2], out_im
 
+#appearance光照增强
+def appearance_prompt(img):
+    h,w = img.shape[:2]
+    # img = cv2.resize(img,(128,128))
+    img = cv2.resize(img,(1024,1024))
+    rgb_planes = cv2.split(img)
+    result_planes = []
+    result_norm_planes = []
+    for plane in rgb_planes:
+        dilated_img = cv2.dilate(plane, np.ones((7,7), np.uint8))
+        bg_img = cv2.medianBlur(dilated_img, 21)
+        diff_img = 255 - cv2.absdiff(plane, bg_img)
+        norm_img = cv2.normalize(diff_img,None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8UC1)
+        result_planes.append(diff_img)
+        result_norm_planes.append(norm_img)
+    result_norm = cv2.merge(result_norm_planes)
+    result_norm = cv2.resize(result_norm,(w,h))
+    return result_norm
 
+def appearance(model, im_path):
+    MAX_SIZE = 1000
+    # obtain im and prompt
+    im_org = cv2.imread(im_path)
+    h, w = im_org.shape[:2]
+    prompt = appearance_prompt(im_org)
+    in_im = np.concatenate((im_org, prompt), -1)
+
+    # constrain the max resolution
+    if max(w, h) < MAX_SIZE:
+        in_im, padding_h, padding_w = stride_integral(in_im, 8)
+    else:
+        in_im = cv2.resize(in_im, (MAX_SIZE, MAX_SIZE))
+
+    # normalize
+    in_im = in_im / 255.0
+    in_im = torch.from_numpy(in_im.transpose(2, 0, 1)).unsqueeze(0)
+
+    # inference
+    in_im = in_im.float().to(DEVICE)
+    model = model.float()
+    with torch.no_grad():
+        pred = model(in_im)
+        pred = torch.clamp(pred, 0, 1)
+        pred = pred[0].permute(1, 2, 0).cpu().numpy()
+        pred = (pred * 255).astype(np.uint8)
+
+        if max(w, h) < MAX_SIZE:
+            out_im = pred[padding_h:, padding_w:]
+        else:
+            pred[pred == 0] = 1
+            shadow_map = cv2.resize(im_org, (MAX_SIZE, MAX_SIZE)).astype(float) / pred.astype(float)
+            shadow_map = cv2.resize(shadow_map, (w, h))
+            shadow_map[shadow_map == 0] = 0.00001
+            out_im = np.clip(im_org.astype(float) / shadow_map, 0, 255).astype(np.uint8)
+            out_im = cv2.cvtColor(out_im, cv2.COLOR_BGR2RGB)
+    return prompt[:, :, 0], prompt[:, :, 1], prompt[:, :, 2], out_im
+
+
+
+#deshadow
 def deshadow_prompt(img):
     h, w = img.shape[:2]
     #img = cv2.resize(img,(128,128))
@@ -181,6 +272,10 @@ def inference_one_im(im_path,task = 'deshadow',model_path = "./pth/docres.pkl",)
         prompt1, prompt2, prompt3, restorted = deshadowing(model, im_path)
     elif task == 'binarization':
         prompt1, prompt2, prompt3, restorted = binarization(model, im_path)
+    elif task=='appearance':
+        prompt1,prompt2,prompt3,restorted = appearance(model,im_path)
+    elif task=='deblurring':
+         prompt1,prompt2,prompt3,restorted = deblurring(model,im_path)
     return prompt1, prompt2,prompt3,restorted
 
 if __name__ == '__main__':

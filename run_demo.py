@@ -61,12 +61,16 @@ def downFile():
 
 def getboxtext():
     global task
-    print("connected")
+    print("模式已切换！")
     task_cn = comBox_function.currentText()
     if task_cn == "去阴影":
         task = 'deshadow'
     elif task_cn == "提取文字":
         task = 'binarization'
+    elif task_cn == "外观增强":
+        task = 'appearance'
+    elif task_cn == "去模糊":
+        task = 'deblurring'
 
 
 if __name__ == "__main__":

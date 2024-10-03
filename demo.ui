@@ -62,6 +62,16 @@
           <string>提取文字</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>外观增强</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>去模糊</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>
