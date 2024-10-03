@@ -27,6 +27,7 @@
 ## ![Static Badge](https://img.shields.io/badge/Function-安装-red) 安装：
 
 ### 0. 安装环境：
+
    
    **CPU版本**
    
@@ -43,8 +44,14 @@
    conda activate dr
    pip install -r requirements_gpu.txt
    ```
+
    
 ### 2. 下载模型权重：
    将模型权重 [docres.pkl](https://1drv.ms/f/s!Ak15mSdV3Wy4iahoKckhDPVP5e2Czw?e=iClwdK) 放至 `./pth/`
-
+<br />
+<br />
 ### 3. 运行run_demo.py
+
+   ```
+   python run_demo.py
+   ```
