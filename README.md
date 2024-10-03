@@ -9,19 +9,32 @@
 **实现：PyQT6 + PyTorch**
 
 - [x] 去阴影
-- [x] 二值化提取
-- [ ] 去模糊
+- [x] 文字提取
+- [x] 去模糊
+- [x] 外观增强
 - [ ] 压缩复原
-- [ ] 外观增强
 - [ ] 折叠复原
 
 ### 去阴影功能：
-<img src="https://github.com/user-attachments/assets/7ddefb98-afd3-42e2-a59f-ca2f84e6ca72" alt="89de2cc669a072c36de638d22f03576" width=500 height=400/>
+<img src="https://github.com/user-attachments/assets/7ddefb98-afd3-42e2-a59f-ca2f84e6ca72" alt="89de2cc669a072c36de638d22f03576" width=600 height=450/>
 
 
+<br />
 
 ### 提取文字功能：
-<img src="https://github.com/user-attachments/assets/4072b245-37ae-4364-ae21-33eab45c5763" alt="89de2cc669a072c36de638d22f03576" width=500 height=400/>
+<img src="https://github.com/user-attachments/assets/4072b245-37ae-4364-ae21-33eab45c5763" alt="89de2cc669a072c36de638d22f03576" width=600 height=450/>
+
+<br />
+
+### 去模糊功能
+<img src="https://github.com/user-attachments/assets/741961f1-780d-4b50-b5e8-088a368909c9" alt="89de2cc669a072c36de638d22f03576" width=600 height=450/>
+
+<br />
+
+### 外观增强功能：
+<img src="https://github.com/user-attachments/assets/643beca7-9e5f-4b28-bddb-fc588cd94267" alt="89de2cc669a072c36de638d22f03576" width=600 height=450/>
+
+
 
 
 ## ![Static Badge](https://img.shields.io/badge/Function-安装-red) 安装：
