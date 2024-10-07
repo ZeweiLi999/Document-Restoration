@@ -42,7 +42,7 @@
 
 
 
-## ![Static Badge](https://img.shields.io/badge/Function-安装-red) 安装：
+## ![Static Badge](https://img.shields.io/badge/Installation-安装-red) 安装：
 
 ### 0. 安装环境：
 
